@@ -29,7 +29,7 @@ $ pytest
 
 ```Python
 >>> from elkomplex import i
->>> from math import e
+>>> from math import e, pi
 >>> str(e**(i*pi))
 '-1.00 + 0.00 i'
 ```
