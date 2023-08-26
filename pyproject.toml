@@ -22,3 +22,15 @@ classifiers = [
 "Homepage" = "https://github.com/elkhadiy/elkomplex"
 "Bug Tracker" = "https://github.com/elkhadiy/elkomplex/issues"
 
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "flake8"
+]
+test = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--doctest-modules"
