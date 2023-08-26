@@ -174,3 +174,28 @@ class Komplex:
 
         See :py:meth:`__mul__` for more details."""
         return self.__mul__(other)
+
+    def __truediv__(self, other: int | float | Komplex) -> Komplex:
+        """Simple implementation using polar coordinates
+
+        z1 = rho1 e^(i th1)
+
+        z2 = rho2 e^(i th2)
+
+        z1 / z2 = (rho1 / rho2) e^(i (th1 - th2) % 2pi)
+
+        rdiv implementation however is not as trivial for the int and float
+        cases which would need the invert method (which needs the normal div).
+
+        Raises:
+            ZeroDivisionError: Seemlessly raises this if other is 0.0 or 0 + 0i
+        """
+        match other:
+            case int() | float():
+                return Komplex.from_polar(self._r / other, self._th)
+            case Komplex():
+                return Komplex.from_polar(self._r / other._r,
+                                          (self._th - other._th) % (2 * pi))
+            case _:
+                return NotImplemented
+

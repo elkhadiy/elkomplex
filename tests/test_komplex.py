@@ -1,3 +1,4 @@
+import pytest
 from elkomplex import Komplex, i
 from math import sqrt, pi, cos, sin, atan2, isclose
 
@@ -57,8 +58,13 @@ class TestKomplex:
         assert 2 - c1 == Komplex.from_cartesian(0, -3)
 
     def test_mul(self):
-        c1 = Komplex.from_cartesian(2, 3)
-        c2 = Komplex.from_cartesian(4, 5)
+        a = 2
+        b = 3
+        c = 4
+        d = 5
+
+        c1 = Komplex.from_cartesian(a, b)
+        c2 = Komplex.from_cartesian(c, d)
 
         assert Komplex() * c1 == Komplex()
         assert 0 * c1 == Komplex()
@@ -69,8 +75,22 @@ class TestKomplex:
         assert 1 * c1 == c1
         assert c1 * 1 == c1
 
-        a = c1._re
-        b = c1._im
-        c = c2._re
-        d = c2._im
         assert c1 * c2 == Komplex.from_cartesian(a*c - b*d, a*d + b*c)
+
+    def test_div(self):
+        a = 2
+        b = 3
+        c = 4
+        d = 5
+
+        c1 = Komplex.from_cartesian(a, b)
+        c2 = Komplex.from_cartesian(c, d)
+
+        with pytest.raises(ZeroDivisionError):
+            c1 / 0
+
+        with pytest.raises(ZeroDivisionError):
+            c1 / Komplex()
+
+        assert (c1 / c2 == Komplex.from_cartesian((a*c + b*d) / (c**2 + d**2),
+                                                  (b*c - a*d) / (c**2 + d**2)))
