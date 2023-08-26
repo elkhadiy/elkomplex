@@ -27,6 +27,13 @@ class TestKomplex:
         assert isclose(c._re, r * cos(th))
         assert isclose(c._im, r * sin(th))
 
+    def test_str_format(self):
+        assert f"{Komplex.from_cartesian(2, 3)}" == '2 + 3 i'
+        assert f"{i:d}" == '0 + 1 i'
+        assert f"{i:0.2f}" == '0.00 + 1.00 i'
+        assert f"{i:0.2fc}" == '0.00 + 1.00 i'
+        assert f"{i:0.2fp}" == '1.00 e ^ (i 1.57)'
+
     def test_eq(self):
         assert Komplex.from_cartesian(0, 0) == Komplex()
         assert Komplex.from_polar(0, 4.6) == Komplex()
