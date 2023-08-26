@@ -1,5 +1,5 @@
 from elkomplex import Komplex
-from math import sqrt, cos, sin, atan2, isclose
+from math import sqrt, pi, cos, sin, atan2, isclose
 
 
 class TestKomplex:
@@ -16,3 +16,13 @@ class TestKomplex:
         assert isclose(c._im, 3)
         assert isclose(c._r, sqrt(2 ** 2 + 3 ** 2))
         assert isclose(c._th, atan2(3, 2))
+
+    def test_polar_constructor(self):
+        c = Komplex.from_polar(1, pi / 4)
+        assert isclose(c._re, sqrt(2) / 2)
+        assert isclose(c._im, sqrt(2) / 2)
+        r = 2.3
+        th = 0.65
+        c = Komplex.from_polar(r, th)
+        assert isclose(c._re, r * cos(th))
+        assert isclose(c._im, r * sin(th))
