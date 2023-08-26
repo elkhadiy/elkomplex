@@ -26,3 +26,29 @@ class TestKomplex:
         c = Komplex.from_polar(r, th)
         assert isclose(c._re, r * cos(th))
         assert isclose(c._im, r * sin(th))
+
+    def test_add(self):
+        c1 = Komplex.from_cartesian(2, 3)
+        c2 = Komplex.from_cartesian(4, 5)
+        c3 = c1 + c2
+        assert isclose(c3._re, 6)
+        assert isclose(c3._im, 8)
+        c3 = c1 + 2
+        assert isclose(c3._re, 4)
+        assert isclose(c3._im, 3)
+        c3 = 2 + c1
+        assert isclose(c3._re, 4)
+        assert isclose(c3._im, 3)
+
+    def test_sub(self):
+        c1 = Komplex.from_cartesian(2, 3)
+        c2 = Komplex.from_cartesian(4, 5)
+        c3 = c1 - c2
+        assert isclose(c3._re, -2)
+        assert isclose(c3._im, -2)
+        c3 = c1 - 2
+        assert isclose(c3._re, 0)
+        assert isclose(c3._im, 3)
+        c3 = 2 - c1
+        assert isclose(c3._re, 0)
+        assert isclose(c3._im, -3)
