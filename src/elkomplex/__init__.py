@@ -33,3 +33,6 @@ Examples:
     '-7.00 + 22.00 i'
 """
 
+from elkomplex.komplex import Komplex
+
+i = Komplex.from_cartesian(0, 1)
