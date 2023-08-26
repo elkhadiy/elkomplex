@@ -74,7 +74,7 @@ class Komplex:
 
         Shows the complex number in its a + ib cartesian form.
         """
-        return str(self).__format__("0.2f")
+        return self.__format__("0.2f")
 
     def __format__(self, spec: str) -> str:
         """Adds str formating options `c` and `p` for Komplex numbers.
