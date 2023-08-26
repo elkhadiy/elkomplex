@@ -61,12 +61,12 @@ Komplex(re=0.71, im=0.71, r=1.00, th=0.79)
     * ✅ Addition
     * ✅ Substraction
     * ✅ Multiplication
-    * ⬜ Division
+    * ✅ Division
     * ✅ Comparison
-    * ⬜ Negation
-    * ⬜ Module
-    * ⬜ Inversion
-    * ⬜ Conjugate
+    * ✅ Negation
+    * ✅ Module
+    * ✅ Inversion
+    * ✅ Conjugate
     * ⬜ Power
 * ⬜ Advanced Math functions
     * ⬜ Exponent
