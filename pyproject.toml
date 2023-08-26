@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "elkomplex"
+version = "0.0.1"
+authors = [
+    {"name"="EL KHADIRI Yassine", "email"="yassineelkhadiri@gmail.com"}
+]
+description = "Toy implementation of a complex datatype"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/elkhadiy/elkomplex"
+"Bug Tracker" = "https://github.com/elkhadiy/elkomplex/issues"
+
