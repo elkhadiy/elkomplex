@@ -8,6 +8,12 @@ This package is not in any way, shape or form suitable for production!
 
 ## 💽 Install
 
+### 🐍 From pip
+
+```Bash
+$ pip install elkomplex
+```
+
 ### 👨‍💻 Development mode
 
 ```Bash
@@ -16,6 +22,7 @@ $ cd elkomplex
 $ python -m venv .pyenv
 $ . .pyenv/bin/activate
 $ pip install -e .[dev,test]
+$ pytest
 ```
 
 ## 💻 Example usage
