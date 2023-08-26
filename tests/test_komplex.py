@@ -1,4 +1,4 @@
-from elkomplex import Komplex
+from elkomplex import Komplex, i
 from math import sqrt, pi, cos, sin, atan2, isclose
 
 
@@ -27,66 +27,43 @@ class TestKomplex:
         assert isclose(c._re, r * cos(th))
         assert isclose(c._im, r * sin(th))
 
+    def test_eq(self):
+        assert Komplex.from_cartesian(0, 0) == Komplex()
+        assert Komplex.from_polar(0, 4.6) == Komplex()
+        assert (Komplex.from_cartesian(sqrt(2) / 2, sqrt(2) / 2)
+                == Komplex.from_polar(1, pi / 4))
+
     def test_add(self):
         c1 = Komplex.from_cartesian(2, 3)
         c2 = Komplex.from_cartesian(4, 5)
-        c3 = c1 + c2
-        assert isclose(c3._re, 6)
-        assert isclose(c3._im, 8)
-        c3 = c1 + 2
-        assert isclose(c3._re, 4)
-        assert isclose(c3._im, 3)
-        c3 = 2 + c1
-        assert isclose(c3._re, 4)
-        assert isclose(c3._im, 3)
+
+        assert c1 + c2 == Komplex.from_cartesian(6, 8)
+        assert c1 + 2 == Komplex.from_cartesian(4, 3)
+        assert 2 + c1 == Komplex.from_cartesian(4, 3)
 
     def test_sub(self):
         c1 = Komplex.from_cartesian(2, 3)
         c2 = Komplex.from_cartesian(4, 5)
-        c3 = c1 - c2
-        assert isclose(c3._re, -2)
-        assert isclose(c3._im, -2)
-        c3 = c1 - 2
-        assert isclose(c3._re, 0, abs_tol=1e-15)
-        assert isclose(c3._im, 3)
-        c3 = 2 - c1
-        assert isclose(c3._re, 0, abs_tol=1e-15)
-        assert isclose(c3._im, -3)
+
+        assert c1 - c2 == Komplex.from_cartesian(-2, -2)
+        assert c1 - 2 == Komplex.from_cartesian(0, 3)
+        assert 2 - c1 == Komplex.from_cartesian(0, -3)
 
     def test_mul(self):
-        c0 = Komplex()
-        i = Komplex.from_cartesian(0, 1)
         c1 = Komplex.from_cartesian(2, 3)
         c2 = Komplex.from_cartesian(4, 5)
 
-        r0 = c0 * c1
-        assert isclose(r0._re, 0, abs_tol=1e-15)
-        assert isclose(r0._im, 0, abs_tol=1e-15)
+        assert Komplex() * c1 == Komplex()
+        assert 0 * c1 == Komplex()
+        assert c1 * 0 == Komplex()
 
-        r0 = 0 * c1
-        assert isclose(r0._re, 0, abs_tol=1e-15)
-        assert isclose(r0._im, 0, abs_tol=1e-15)
+        assert i * i == -1
 
-        r0 = c1 * 0
-        assert isclose(r0._re, 0, abs_tol=1e-15)
-        assert isclose(r0._im, 0, abs_tol=1e-15)
+        assert 1 * c1 == c1
+        assert c1 * 1 == c1
 
-        r0 = i * i
-        assert isclose(r0._re, -1)
-        assert isclose(r0._im, 0, abs_tol=1e-15)
-
-        r1 = 1 * c1
-        assert isclose(r1._re, c1._re)
-        assert isclose(r1._im, c1._im)
-
-        r1 = c1 * 1
-        assert isclose(r1._re, c1._re)
-        assert isclose(r1._im, c1._im)
-
-        r2 = c1 * c2
         a = c1._re
         b = c1._im
         c = c2._re
         d = c2._im
-        assert isclose(r2._re, a * c - b * d)
-        assert isclose(r2._im, a * d + b * c)
+        assert c1 * c2 == Komplex.from_cartesian(a*c - b*d, a*d + b*c)
