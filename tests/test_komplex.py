@@ -6,9 +6,9 @@ class TestKomplex:
 
     def test_default_constructor(self):
         zero = Komplex()
-        assert isclose(zero._re, 0)
-        assert isclose(zero._im, 0)
-        assert isclose(zero._r, 0)
+        assert isclose(zero._re, 0, abs_tol=1e-15)
+        assert isclose(zero._im, 0, abs_tol=1e-15)
+        assert isclose(zero._r, 0, abs_tol=1e-15)
 
     def test_cartesian_constructor(self):
         c = Komplex.from_cartesian(2, 3)
@@ -47,8 +47,46 @@ class TestKomplex:
         assert isclose(c3._re, -2)
         assert isclose(c3._im, -2)
         c3 = c1 - 2
-        assert isclose(c3._re, 0)
+        assert isclose(c3._re, 0, abs_tol=1e-15)
         assert isclose(c3._im, 3)
         c3 = 2 - c1
-        assert isclose(c3._re, 0)
+        assert isclose(c3._re, 0, abs_tol=1e-15)
         assert isclose(c3._im, -3)
+
+    def test_mul(self):
+        c0 = Komplex()
+        i = Komplex.from_cartesian(0, 1)
+        c1 = Komplex.from_cartesian(2, 3)
+        c2 = Komplex.from_cartesian(4, 5)
+
+        r0 = c0 * c1
+        assert isclose(r0._re, 0, abs_tol=1e-15)
+        assert isclose(r0._im, 0, abs_tol=1e-15)
+
+        r0 = 0 * c1
+        assert isclose(r0._re, 0, abs_tol=1e-15)
+        assert isclose(r0._im, 0, abs_tol=1e-15)
+
+        r0 = c1 * 0
+        assert isclose(r0._re, 0, abs_tol=1e-15)
+        assert isclose(r0._im, 0, abs_tol=1e-15)
+
+        r0 = i * i
+        assert isclose(r0._re, -1)
+        assert isclose(r0._im, 0, abs_tol=1e-15)
+
+        r1 = 1 * c1
+        assert isclose(r1._re, c1._re)
+        assert isclose(r1._im, c1._im)
+
+        r1 = c1 * 1
+        assert isclose(r1._re, c1._re)
+        assert isclose(r1._im, c1._im)
+
+        r2 = c1 * c2
+        a = c1._re
+        b = c1._im
+        c = c2._re
+        d = c2._im
+        assert isclose(r2._re, a * c - b * d)
+        assert isclose(r2._im, a * d + b * c)

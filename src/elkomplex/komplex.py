@@ -10,7 +10,7 @@ Typical usage:
 """
 
 from __future__ import annotations
-from math import sqrt, cos, sin, atan2
+from math import sqrt, pi, cos, sin, atan2
 
 
 class Komplex:
@@ -132,3 +132,15 @@ class Komplex:
             case _:
                 return NotImplemented
 
+    def __mul__(self, other: int | float | Komplex) -> Komplex:
+        match other:
+            case int() | float():
+                return Komplex.from_polar(other * self._r, self._th)
+            case Komplex():
+                return Komplex.from_polar(other._r * self._r,
+                                          (other._th + self._th) % (2 * pi))
+            case _:
+                return NotImplemented
+
+    def __rmul__(self, other: int | float | Komplex) -> Komplex:
+        return self.__mul__(other)
