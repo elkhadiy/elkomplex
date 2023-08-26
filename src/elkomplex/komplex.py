@@ -10,7 +10,10 @@ Typical usage:
 """
 
 from __future__ import annotations
-from math import sqrt, pi, cos, sin, atan2
+from math import sqrt, pi, cos, sin, atan2, isclose
+
+
+EQTOL = 1e-15
 
 
 class Komplex:
@@ -98,6 +101,17 @@ class Komplex:
             return (f"{self._re:{spec[:-1]}} "
                     + f"{'+-'[self._im<0]} {abs(self._im):{spec[:-1]}} i")
         return f"{self._re:{spec}} {'+-'[self._im<0]} {abs(self._im):{spec}} i"
+
+    def __eq__(self, other: int | float | Komplex) -> bool:
+        match other:
+            case int() | float():
+                return (isclose(self._re, other, abs_tol=EQTOL)
+                        and isclose(self._im, 0, abs_tol=EQTOL))
+            case Komplex():
+                return (isclose(self._re, other._re, abs_tol=EQTOL)
+                        and isclose(self._im, other._im, abs_tol=EQTOL))
+            case _:
+                return NotImplemented
 
     def __add__(self, other: int | float | Komplex) -> Komplex:
         match other:
