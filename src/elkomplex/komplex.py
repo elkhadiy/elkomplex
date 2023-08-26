@@ -9,7 +9,7 @@ Typical usage:
     Komplex(re=2.00, im=3.00, r=3.61, th=0.98)
 """
 
-
+from __future__ import annotations
 from math import sqrt, cos, sin, atan2
 
 
@@ -33,7 +33,7 @@ class Komplex:
         self._th = 0
 
     @classmethod
-    def from_cartesian(cls, re: float, im: float) -> 'Komplex':
+    def from_cartesian(cls, re: float, im: float) -> Komplex:
         """Creates a complex number from its real and imaginary parts
 
         Args:
@@ -48,7 +48,7 @@ class Komplex:
         return c
 
     @classmethod
-    def from_polar(cls, r: float, th: float) -> 'Komplex':
+    def from_polar(cls, r: float, th: float) -> Komplex:
         """Creates a complex number from its polar coordiates (r, theta)
 
         Args:
