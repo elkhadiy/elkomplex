@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "elkomplex"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
     {"name"="EL KHADIRI Yassine", "email"="yassineelkhadiri@gmail.com"}
 ]
 description = "Toy implementation of a complex datatype"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.7"
 dependencies = []
 classifiers = [
     "Programming Language :: Python :: 3",

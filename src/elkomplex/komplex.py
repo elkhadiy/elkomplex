@@ -104,26 +104,28 @@ class Komplex:
 
     def __eq__(self, other: int | float | Komplex) -> bool:
         """Check if real and imaginary parts are close enough to be equal"""
-        match other:
-            case int() | float():
-                return (isclose(self._re, other, abs_tol=EQTOL)
-                        and isclose(self._im, 0, abs_tol=EQTOL))
-            case Komplex():
-                return (isclose(self._re, other._re, abs_tol=EQTOL)
-                        and isclose(self._im, other._im, abs_tol=EQTOL))
-            case _:
-                return NotImplemented
+
+        if isinstance(other, int | float):
+            return (isclose(self._re, other, abs_tol=EQTOL)
+                    and isclose(self._im, 0, abs_tol=EQTOL))
+
+        if isinstance(other, Komplex):
+            return (isclose(self._re, other._re, abs_tol=EQTOL)
+                    and isclose(self._im, other._im, abs_tol=EQTOL))
+
+        return NotImplemented
 
     def __add__(self, other: int | float | Komplex) -> Komplex:
         """Piecewise addition between real and imaginary parts"""
-        match other:
-            case int() | float():
-                return Komplex.from_cartesian(other + self._re, self._im)
-            case Komplex():
-                return Komplex.from_cartesian(self._re + other._re,
-                                              self._im + other._im)
-            case _:
-                return NotImplemented
+
+        if isinstance(other, int | float):
+            return Komplex.from_cartesian(other + self._re, self._im)
+
+        if isinstance(other, Komplex):
+            return Komplex.from_cartesian(self._re + other._re,
+                                          self._im + other._im)
+
+        return NotImplemented
 
     def __radd__(self, other: int | float | Komplex) -> Komplex:
         """Addition is symmetric"""
@@ -131,25 +133,27 @@ class Komplex:
 
     def __sub__(self, other: int | float | Komplex) -> Komplex:
         """Piecewise substraction between real and imaginary parts"""
-        match other:
-            case int() | float():
-                return Komplex.from_cartesian(self._re - other, self._im)
-            case Komplex():
-                return Komplex.from_cartesian(self._re - other._re,
-                                              self._im - other._im)
-            case _:
-                return NotImplemented
+
+        if isinstance(other, int | float):
+            return Komplex.from_cartesian(self._re - other, self._im)
+
+        if isinstance(other, Komplex):
+            return Komplex.from_cartesian(self._re - other._re,
+                                          self._im - other._im)
+
+        return NotImplemented
 
     def __rsub__(self, other: int | float | Komplex) -> Komplex:
         """Piecewise substraction between real and imaginary parts"""
-        match other:
-            case int() | float():
-                return Komplex.from_cartesian(other - self._re, -self._im)
-            case Komplex():
-                return Komplex.from_cartesian(other._re - self._re,
-                                              other._im - self._im)
-            case _:
-                return NotImplemented
+
+        if isinstance(other, int | float):
+            return Komplex.from_cartesian(other - self._re, -self._im)
+
+        if isinstance(other, Komplex):
+            return Komplex.from_cartesian(other._re - self._re,
+                                          other._im - self._im)
+
+        return NotImplemented
 
     def __mul__(self, other: int | float | Komplex) -> Komplex:
         """Simple implementation using polar coordinates
@@ -160,14 +164,15 @@ class Komplex:
 
         z1 * z2 = (rho1 * rho2) e^(i (th1 + th2) % 2pi)
         """
-        match other:
-            case int() | float():
-                return Komplex.from_polar(other * self._r, self._th)
-            case Komplex():
-                return Komplex.from_polar(other._r * self._r,
-                                          (other._th + self._th) % (2 * pi))
-            case _:
-                return NotImplemented
+
+        if isinstance(other, int | float):
+            return Komplex.from_polar(other * self._r, self._th)
+
+        if isinstance(other, Komplex):
+            return Komplex.from_polar(other._r * self._r,
+                                      (other._th + self._th) % (2 * pi))
+
+        return NotImplemented
 
     def __rmul__(self, other: int | float | Komplex) -> Komplex:
         """Multiplication is symmetric.
@@ -190,14 +195,15 @@ class Komplex:
         Raises:
             ZeroDivisionError: Seemlessly raises this if other is 0.0 or 0 + 0i
         """
-        match other:
-            case int() | float():
-                return Komplex.from_polar(self._r / other, self._th)
-            case Komplex():
-                return Komplex.from_polar(self._r / other._r,
-                                          (self._th - other._th) % (2 * pi))
-            case _:
-                return NotImplemented
+
+        if isinstance(other, int | float):
+            return Komplex.from_polar(self._r / other, self._th)
+
+        if isinstance(other, Komplex):
+            return Komplex.from_polar(self._r / other._r,
+                                      (self._th - other._th) % (2 * pi))
+
+        return NotImplemented
 
     def __neg__(self) -> Komplex:
         """For z returns -z"""
@@ -225,28 +231,30 @@ class Komplex:
         Positive integer exponents: z^n = r^n e^(i (th * n))
         Negative integer exponents: z^-n = 1 / z^n
         """
-        match n:
-            case int() | float():
-                z = Komplex.from_polar(self._r ** n, self._th * n)
-                return z if n >= 0 else ~z
-            case Komplex():
-                # May be implemented using log's power series...
-                return NotImplemented
-            case _:
-                return NotImplemented
+
+        if isinstance(n, int | float):
+            z = Komplex.from_polar(self._r ** n, self._th * n)
+            return z if n >= 0 else ~z
+
+        if isinstance(n, Komplex):
+            # May be implemented using log's power series...
+            return NotImplemented
+
+        return NotImplemented
 
     def __rpow__(self, z: int | float | Komplex) -> Komplex:
         x = self._re
         y = self._im
-        match z:
-            case int() | float():
-                a = z
-                b = 0
-            case Komplex():
-                a = z._re
-                b = z._im
-            case _:
-                return NotImplemented
+
+        if isinstance(z, int | float):
+            a = z
+            b = 0
+        elif isinstance(z, Komplex):
+            a = z._re
+            b = z._im
+        else:
+            return NotImplemented
+
         if isclose(b, 0, abs_tol=EQTOL) and a > 0:
             return Komplex.from_cartesian(a**x * cos(y * log(a)),
                                           a**x * sin(y * log(a)))
