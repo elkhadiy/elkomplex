@@ -94,3 +94,20 @@ class TestKomplex:
 
         assert (c1 / c2 == Komplex.from_cartesian((a*c + b*d) / (c**2 + d**2),
                                                   (b*c - a*d) / (c**2 + d**2)))
+
+    def test_neg_conj(self):
+        a = 2
+        b = 3
+
+        c1 = Komplex.from_cartesian(a, b)
+
+        assert -c1 == Komplex.from_cartesian(-a, -b)
+        assert c1.conjugate() == Komplex.from_polar(c1._r, -c1._th)
+
+    def test_inv_rdiv(self):
+        a = 2
+        b = 3
+
+        c1 = Komplex.from_cartesian(a, b)
+
+        assert ~c1 == 1 / c1

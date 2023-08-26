@@ -199,3 +199,21 @@ class Komplex:
             case _:
                 return NotImplemented
 
+    def __neg__(self) -> Komplex:
+        """For z returns -z"""
+        return -1 * self
+
+    def conjugate(self) -> Komplex:
+        """For z = a + ib returns a - ib"""
+        return Komplex.from_cartesian(self._re, - self._im)
+
+    def __abs__(self) -> float:
+        """Return |z| which is its module"""
+        return self._r
+
+    def __invert__(self) -> Komplex:
+        return self.conjugate() / abs(self) ** 2
+
+    def __rtruediv__(self, other: int | float | Komplex) -> Komplex:
+        return ~(self / other)
+
