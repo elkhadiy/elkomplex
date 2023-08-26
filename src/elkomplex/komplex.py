@@ -100,28 +100,35 @@ class Komplex:
         return f"{self._re:{spec}} {'+-'[self._im<0]} {abs(self._im):{spec}} i"
 
     def __add__(self, other: int | float | Komplex) -> Komplex:
-        if isinstance(other, (int, float)):
-            return Komplex.from_cartesian(other + self._re, self._im)
-        if isinstance(other, Komplex):
-            return Komplex.from_cartesian(self._re + other._re,
-                                          self._im + other._im)
-        return NotImplemented
+        match other:
+            case int() | float():
+                return Komplex.from_cartesian(other + self._re, self._im)
+            case Komplex():
+                return Komplex.from_cartesian(self._re + other._re,
+                                              self._im + other._im)
+            case _:
+                return NotImplemented
 
     def __radd__(self, other: int | float | Komplex) -> Komplex:
         return self.__add__(other)
 
     def __sub__(self, other: int | float | Komplex) -> Komplex:
-        if isinstance(other, (int, float)):
-            return Komplex.from_cartesian(self._re - other, self._im)
-        if isinstance(other, Komplex):
-            return Komplex.from_cartesian(self._re - other._re,
-                                          self._im - other._im)
-        return NotImplemented
+        match other:
+            case int() | float():
+                return Komplex.from_cartesian(self._re - other, self._im)
+            case Komplex():
+                return Komplex.from_cartesian(self._re - other._re,
+                                              self._im - other._im)
+            case _:
+                return NotImplemented
 
     def __rsub__(self, other: int | float | Komplex) -> Komplex:
-        if isinstance(other, (int, float)):
-            return Komplex.from_cartesian(other - self._re, -self._im)
-        if isinstance(other, Komplex):
-            return Komplex.from_cartesian(other._re - self._re,
-                                          other._im - self._im)
-        return NotImplemented
+        match other:
+            case int() | float():
+                return Komplex.from_cartesian(other - self._re, -self._im)
+            case Komplex():
+                return Komplex.from_cartesian(other._re - self._re,
+                                              other._im - self._im)
+            case _:
+                return NotImplemented
+
