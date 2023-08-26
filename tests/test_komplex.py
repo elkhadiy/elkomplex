@@ -1,6 +1,6 @@
 import pytest
 from elkomplex import Komplex, i
-from math import sqrt, pi, cos, sin, atan2, isclose
+from math import sqrt, pi, cos, sin, atan2, isclose, e
 
 
 class TestKomplex:
@@ -111,3 +111,14 @@ class TestKomplex:
         c1 = Komplex.from_cartesian(a, b)
 
         assert ~c1 == 1 / c1
+
+    def test_pow(self):
+        a = 2
+        b = 3
+
+        z = Komplex.from_cartesian(a, b)
+
+        assert z**0 == 1
+        assert i**2 == -1
+
+        assert e**(i*pi) == -1

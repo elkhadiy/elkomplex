@@ -10,7 +10,7 @@ Typical usage:
 """
 
 from __future__ import annotations
-from math import sqrt, pi, cos, sin, atan2, isclose
+from math import sqrt, pi, cos, sin, atan2, isclose, log
 
 
 EQTOL = 1e-15
@@ -217,3 +217,38 @@ class Komplex:
     def __rtruediv__(self, other: int | float | Komplex) -> Komplex:
         return ~(self / other)
 
+    def __pow__(self, n: int | float | Komplex) -> Komplex:
+        """Power exponentionation is piecewise following the exponent type
+
+        z = r e^(i th)
+
+        Positive integer exponents: z^n = r^n e^(i (th * n))
+        Negative integer exponents: z^-n = 1 / z^n
+        """
+        match n:
+            case int() | float():
+                z = Komplex.from_polar(self._r ** n, self._th * n)
+                return z if n >= 0 else ~z
+            case Komplex():
+                # May be implemented using log's power series...
+                return NotImplemented
+            case _:
+                return NotImplemented
+
+    def __rpow__(self, z: int | float | Komplex) -> Komplex:
+        x = self._re
+        y = self._im
+        match z:
+            case int() | float():
+                a = z
+                b = 0
+            case Komplex():
+                a = z._re
+                b = z._im
+            case _:
+                return NotImplemented
+        if isclose(b, 0, abs_tol=EQTOL) and a > 0:
+            return Komplex.from_cartesian(a**x * cos(y * log(a)),
+                                          a**x * sin(y * log(a)))
+        else:
+            return NotImplemented

@@ -20,6 +20,13 @@ $ pip install -e .[dev,test]
 
 ## 💻 Example usage
 
+```Python
+>>> from elkomplex import i
+>>> from math import e
+>>> str(e**(i*pi))
+'-1.00 + 0.00 i'
+```
+
 ### Intuitive interface
 
 ```Python
@@ -57,7 +64,7 @@ Komplex(re=0.71, im=0.71, r=1.00, th=0.79)
 * ✅ Basic constructors
 * ✅ Formatting and printing
 * ✅ Pytest framework
-* ⬜ Basic Arithmetic methods
+* 🚧 Basic Arithmetic methods
     * ✅ Addition
     * ✅ Substraction
     * ✅ Multiplication
@@ -67,7 +74,7 @@ Komplex(re=0.71, im=0.71, r=1.00, th=0.79)
     * ✅ Module
     * ✅ Inversion
     * ✅ Conjugate
-    * ⬜ Power
+    * 🚧 Power
 * ⬜ Advanced Math functions
     * ⬜ Exponent
     * ⬜ Sqrt
